@@ -2,7 +2,10 @@
     stdenv,
     git,
     nodejs,
-    pnpm
+    pnpm,
+    lib,
+    useLocal ? false,
+    fetchFromGitHub
 }: stdenv.mkDerivation (finalAttrs: {
     pname = "scripts";
     version = "0.0.1";
@@ -23,13 +26,17 @@
 
         runHook postInstall
     '';
-    src = ./.;
+    src = if useLocal then ./. else fetchFromGitHub {
+        owner = "sadan4";
+        repo = "scripts";
+        hash = lib.fakeHash;
+    };
     pnpmDeps = pnpm.fetchDeps {
         inherit (finalAttrs) pname src;
 
-        hash = "sha256-bosCE9gBFCcM3Ww6sJmhps/cl4lovXKMieYpkqAMst8=";
+        hash = "sha256-TPJGpZQCFb6yapWebbTYK7p2EPz0AnSRUKLKo9yReQk=";
     };
-    mata = with lib; {
+    meta = with lib; {
     description = "personal scripts for the various things";
     homepage = "https://sadan.zip";
     license = lib.licenses.cc0;
