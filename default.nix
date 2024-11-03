@@ -29,7 +29,7 @@
     src = if useLocal then ./. else fetchFromGitHub {
         owner = "sadan4";
         repo = "scripts";
-        rev = "cd250afb7d55e50f729de82246dd746ab7e7d266"
+        rev = "cd250afb7d55e50f729de82246dd746ab7e7d266";
         hash = lib.fakeHash;
     };
     pnpmDeps = pnpm.fetchDeps {
