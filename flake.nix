@@ -21,9 +21,15 @@
           }
         ) platforms
       );
+      fromSys = (
+        system:
+        import nixpkgs {
+          inherit system;
+        }
+      );
     in
     {
       inherit packages;
-      flakePackage = (pkgs: pkgs.callPackage ./. { useLocal = true; });
+      flakePackage = (system: (fromSys system).callPackage ./. { useLocal = true; });
     };
 }
